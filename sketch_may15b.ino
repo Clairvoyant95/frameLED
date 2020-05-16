@@ -81,6 +81,7 @@ void loop() {
   }
 
   else if (counter == 4) {
+    Serial.println(counter);
     // phase 0: fade in red from min to max
     FadeOn(redPin);
 
