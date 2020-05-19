@@ -34,7 +34,6 @@ int FadeOff(int pin)
   return (fadeValue);
 }
 
-
 void setup() {
   Serial.begin(9600);
   pinMode(buttonPin, INPUT);
@@ -45,64 +44,67 @@ void setup() {
 
 void loop() {
 
-  int buttonState;
-  buttonState = digitalRead(buttonPin);
-  if (buttonState == LOW) {
+  if (digitalRead(buttonPin) == LOW) {
     counter++;
-    delay(400);
+    delay(200);
   }
 
   if (counter == 0) {
-    digitalWrite(redPin, LOW);
-    digitalWrite(greenPin, LOW);
-    digitalWrite(bluePin, LOW);
+    analogWrite(redPin, 0);
+    analogWrite(greenPin, 0);
+    analogWrite(bluePin, 0);
     Serial.println(counter);
   }
 
   else if (counter == 1) {
-    digitalWrite(redPin, HIGH);
-    digitalWrite(greenPin, LOW);
-    digitalWrite(bluePin, LOW);
+    analogWrite(redPin, 255);
+    analogWrite(greenPin, 0);
+    analogWrite(bluePin, 0);
     Serial.println(counter);
   }
 
   else if (counter == 2) {
-    digitalWrite(redPin, LOW);
-    digitalWrite(greenPin, HIGH);
-    digitalWrite(bluePin, LOW);
+    analogWrite(redPin, 0);
+    analogWrite(greenPin, 255);
+    analogWrite(bluePin, 0);
     Serial.println(counter);
   }
 
   else if (counter == 3) {
-    digitalWrite(redPin, LOW);
-    digitalWrite(greenPin, LOW);
-    digitalWrite(bluePin, HIGH);
+    analogWrite(redPin, 0);
+    analogWrite(greenPin, 0);
+    analogWrite(bluePin, 255);
     Serial.println(counter);
   }
 
   else if (counter == 4) {
+    analogWrite(redPin, 190);
+    analogWrite(greenPin, 210);
+    analogWrite(bluePin, 255);
     Serial.println(counter);
-    // phase 0: fade in red from min to max
+  }
+
+  else if (counter == 5) {
+      // phase 0: fade in red from min to max
     FadeOn(redPin);
 
     // phase 1: fade out blue from max to min
     FadeOff(bluePin);
-    delay(100);
 
     // phase 2: fade in green from min to max
     FadeOn(greenPin);
 
     // phase 3: fade out red from max to min
     FadeOff(redPin);
-    delay(2500);
 
     // phase 4: fade in blue from min to max
     FadeOn(bluePin);
 
     // phase 5: fade out from max to min
     FadeOff(greenPin);
-    delay(900);
+
   }
+
   else {
     counter = 0;
   }
